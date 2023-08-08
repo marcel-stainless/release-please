@@ -171,6 +171,7 @@ interface ReleaserConfigJson {
   'skip-snapshot'?: boolean; // Java-only
   'initial-version'?: string;
   'exclude-paths'?: string[]; // manifest-only
+  'reviewers'?: string[];
 }
 
 export interface ManifestOptions {
@@ -194,6 +195,7 @@ export interface ManifestOptions {
   releaseSearchDepth?: number;
   commitSearchDepth?: number;
   logger?: Logger;
+  reviewers?: string[];
 }
 
 export interface ReleaserPackageConfig extends ReleaserConfigJson {
@@ -299,6 +301,7 @@ export class Manifest {
   readonly commitSearchDepth: number;
   readonly logger: Logger;
   private pullRequestOverflowHandler: PullRequestOverflowHandler;
+  private reviewers?: string[];
 
   /**
    * Create a Manifest from explicit config in code. This assumes that the
@@ -375,6 +378,7 @@ export class Manifest {
       this.github,
       this.logger
     );
+    this.reviewers = manifestOptions?.reviewers;
   }
 
   /**
@@ -966,6 +970,7 @@ export class Manifest {
       {
         fork: this.fork,
         draft: pullRequest.draft,
+        reviewers: this.reviewers,
       }
     );
 
@@ -1339,6 +1344,7 @@ async function parseConfig(
     releaseSearchDepth: config['release-search-depth'],
     commitSearchDepth: config['commit-search-depth'],
     sequentialCalls: config['sequential-calls'],
+    reviewers: config['reviewers'],
   };
   return {config: repositoryConfig, options: manifestOptions};
 }

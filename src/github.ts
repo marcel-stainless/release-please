@@ -199,7 +199,7 @@ export type ChangeSet = Map<string, FileDiff>;
 interface CreatePullRequestOptions {
   fork?: boolean;
   draft?: boolean;
-  reviewers?: [string];
+  reviewers?: string[];
 }
 
 export class GitHub {
@@ -1070,6 +1070,7 @@ export class GitHub {
       signoffUser?: string;
       fork?: boolean;
       skipLabeling?: boolean;
+      reviewers?: string[];
     }
   ): Promise<PullRequest> {
     let message = releasePullRequest.title.toString();
@@ -1095,6 +1096,7 @@ export class GitHub {
       {
         fork: options?.fork,
         draft: releasePullRequest.draft,
+        reviewers: options?.reviewers,
       }
     );
   }
