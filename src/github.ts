@@ -218,7 +218,7 @@ export class GitHub {
     this.logger = options.logger ?? defaultLogger;
   }
 
-  static createDefaultAgent(baseUrl: string, defaultProxy?: ProxyOption) {
+  static createDefaultAgent(baseUrl: string, defaultProxy?: ProxyOption) : HttpProxyAgent | HttpsProxyAgent | undefined {
     if (!defaultProxy) {
       return undefined;
     }
