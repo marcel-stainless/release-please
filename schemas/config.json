@@ -206,6 +206,13 @@
         "initial-version": {
           "description": "Releases the initial library with a specified version",
           "type": "string"
+        },
+        "reviewers": {
+          "description": "List of reviewers to request a review from when first creating a review PR.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
@@ -402,6 +409,7 @@
     "version-file": true,
     "snapshot-label": true,
     "initial-version": true,
-    "exclude-paths": true
+    "exclude-paths": true,
+    "reviewers": true
   }
 }

@@ -1136,12 +1136,16 @@ export class GitHub {
         labels: pullRequest.labels,
       });
       if (options?.reviewers) {
-        await this.octokit.pulls.requestReviewers({
-          owner: this.repository.owner,
-          repo: this.repository.repo,
-          pull_number: prNumber,
-          reviewers: options.reviewers,
-        });
+        try {
+          await this.octokit.pulls.requestReviewers({
+            owner: this.repository.owner,
+            repo: this.repository.repo,
+            pull_number: prNumber,
+            reviewers: options.reviewers,
+          });
+        } catch (error) {
+          console.log('Failed to add reviewers. Continuing anyway', error);
+        }
       }
       return await this.getPullRequest(prNumber);
     }
